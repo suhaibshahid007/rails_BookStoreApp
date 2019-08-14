@@ -1,7 +1,12 @@
 <h2><%= @book.title%></h2>
 <h3><%= @book.author%></h3>
-<p> <%= @book.description%></p>
+<p><%=  @book.description%></p>
 
+<% if user_signed_in? %>
 
-<%=link_to "Edit Book", edit_book_path(@book) %>
-<%=link_to "Delete Book", book_path(@book), method: :delete, data: {confirm: "Are you sure?" }%>   
+	<% if @book.user == current_user %>
+		<%=link_to "Edit Book", edit_book_path(@book) %>
+		<%=link_to "Delete Book", book_path(@book), method: :delete, data: {confirm: "Are you sure?" }%>
+	<% end %>
+	
+<% end %>

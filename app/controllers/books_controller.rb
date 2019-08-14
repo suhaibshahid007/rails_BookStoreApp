@@ -1,49 +1,54 @@
+# frozen_string_literal: true
+
 class BooksController < ApplicationController
+  before_action :find_books, only: [:show, :edit, :update, :destroy]
 
-	def new
-		@book = Book.new
-	end
+  def new
+    @book = current_user.books.build
+    @categories = Category.all.map{ |c| [c.name, c.id] } #to fetch all the categories
+  end
 
-	def create
-		@book = Book.new(book_params)
-		if @book.save
-			redirect_to root_path
-		else
-			render 'new'
-		end
-	end
+  def create
+    @book = current_user.books.build(book_params)
+    @book.category_id = params[:category_id]
+    if @book.save
+      redirect_to root_path
+    else
+      render 'new'
+    end
+  end
 
-	def index
-		@books = Book.all.order("created_at DESC")
-	end
+  def index
+    @books = Book.all.order('created_at DESC')
+  end
 
-	def show
-		@book = Book.find(params[:id])
-	end
+  def show
 
-	def edit
-		@book = Book.find(params[:id])
-	end
+  end
 
-	def update
-		@book = Book.find(params[:id])
-		if @book.update(book_params)
-			redirect_to book_path(@book)
-		else
-			render 'edit'
-		end
-	end
+  def edit; end
 
-	def destroy
-		@book = Book.find(params[:id])
-		@book.destroy
-		redirect_to root_path
-	end
+  def update
+    if @book.update(book_params)
+      redirect_to book_path(@book)
+    else
+      render 'edit'
+    end
+  end
 
-	private
+  def destroy
+    @book = Book.find(params[:id])
+    @book.destroy
+    redirect_to root_path
+  end
 
-		def book_params
-			params.require(:book).permit(:title, :description, :author)
-		end
+  private
 
+  def book_params
+    params.require(:book).permit(:title, :description, :author, :category_id)
+  end
+
+  def find_books
+    @book = Book.find(params[:id])
+  end
 end
