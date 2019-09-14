@@ -38,6 +38,7 @@ class BooksController < ApplicationController
   end
 
   def edit
+    authorize @book
    @categories = Category.all.map{ |c| [c.name, c.id] }
   end
 

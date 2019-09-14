@@ -20,6 +20,7 @@ gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 gem 'carrierwave', '~> 2.0'
 gem 'mini_magick'
+gem 'pundit'
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
