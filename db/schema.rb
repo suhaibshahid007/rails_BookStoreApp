@@ -12,14 +12,17 @@
 
 ActiveRecord::Schema.define(version: 2019_09_01_104227) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "author"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "category_id"
+    t.bigint "user_id"
+    t.bigint "category_id"
     t.string "image"
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["user_id"], name: "index_books_on_user_id"
@@ -36,8 +39,8 @@ ActiveRecord::Schema.define(version: 2019_09_01_104227) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "book_id"
+    t.bigint "user_id"
+    t.bigint "book_id"
     t.index ["book_id"], name: "index_reviews_on_book_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
@@ -54,4 +57,8 @@ ActiveRecord::Schema.define(version: 2019_09_01_104227) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "books", "categories"
+  add_foreign_key "books", "users"
+  add_foreign_key "reviews", "books"
+  add_foreign_key "reviews", "users"
 end
