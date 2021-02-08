@@ -18,7 +18,7 @@ gem 'simple_form', '~> 4.1'
 gem 'pg'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
-gem 'carrierwave', '~> 2.0'
+gem 'carrierwave', '~> 2.1'
 gem 'mini_magick'
 gem 'pundit'
 group :development, :test do
